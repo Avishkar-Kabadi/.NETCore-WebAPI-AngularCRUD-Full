@@ -10,6 +10,8 @@ import { AddEditInspectionComponent } from './inspection/add-edit-inspection/add
 import { InspectionApiService } from './inspection-api.service';
 import { AddEditStatusComponent } from './inspection/add-edit-status/add-edit-status.component';
 import { AddEditInspectionTypesComponent } from './inspection/add-edit-inspection-types/add-edit-inspection-types.component';
+// import { FeedbackComponent } from './feedback/feedback.component';
+// import { MessageComponent } from './inspection/message/message.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AddEditInspectionTypesComponent } from './inspection/add-edit-inspectio
     AddEditInspectionComponent,
     AddEditStatusComponent,
     AddEditInspectionTypesComponent
+    
+    
   ],
   imports: [
     BrowserModule,

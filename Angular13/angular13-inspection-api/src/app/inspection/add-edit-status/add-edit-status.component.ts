@@ -12,11 +12,13 @@ export class AddEditStatusComponent implements OnInit {
   @Input() status:any;
   id: number = 0;
   statusOption: string = "";
+  feedback: string = "";
 
   ngOnInit(): void {
     
     this.id = this.status.id;
     this.statusOption = this.status.statusOption;
+    this.feedback = this.status.feedback;
 
   }
 
@@ -26,6 +28,7 @@ export class AddEditStatusComponent implements OnInit {
 
     var status = {
       statusOption:this.statusOption,
+      feedback:this.feedback, 
     }
 
     this.service.addStatus(status).subscribe(res => {
