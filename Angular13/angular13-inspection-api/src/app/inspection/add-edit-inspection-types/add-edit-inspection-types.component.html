@@ -1,7 +1,12 @@
 <form>
     <div class="mb-3">
-      <label for="inspectionName" class="form-label">Inspection Name</label>
+      <label for="inspectionName" class="form-label">Expense Name</label>
       <input type="text" class="form-control" [(ngModel)]="inspectionName" name="inspectionName">
+    </div>
+
+    <div class="mb-3">
+      <label for="totalAmount" class="form-label">Total Amount</label>
+      <input type="text" class="form-control" [(ngModel)]="totalAmount" name="totalAmount">
     </div>
     <button (click)="addInspectionTypes()" *ngIf="inspectiontypes.id==0" class="btn btn-primary">
       Add

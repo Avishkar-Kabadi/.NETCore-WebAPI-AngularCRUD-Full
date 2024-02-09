@@ -26,7 +26,7 @@ namespace InspectionApiApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Inspection>>> GetInspections()
         {
-            return await _context.Inspections.ToListAsync();
+            return await _context.Inspections.Include(s=>s.InspectionType).ToListAsync();
         }
 
         // GET: api/Inspections/5

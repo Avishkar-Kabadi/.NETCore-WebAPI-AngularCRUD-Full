@@ -29,6 +29,10 @@ namespace InspectionApiApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Amount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Comments")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -36,6 +40,10 @@ namespace InspectionApiApp.Migrations
 
                     b.Property<int>("InspectionTypeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SelectedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -62,6 +70,9 @@ namespace InspectionApiApp.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("TotalAmount")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("InspectionTypes");
@@ -79,11 +90,6 @@ namespace InspectionApiApp.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("feedback")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 

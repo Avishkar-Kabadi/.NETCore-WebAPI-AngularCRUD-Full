@@ -13,12 +13,17 @@ export class AddEditInspectionComponent implements OnInit {
   id: number = 0;
   status: string = "";
   comments: string = "";
-  inspectionTypeId!: number;
-
-
+  inspectionName: string="";
+  inspectionTypeId!:Number;
+  amount:Number=0;
+  totalAmount:Number=0;
+  selectedDate: Date = new Date;
   inspectionList$!: Observable<any[]>;
   statusList$!: Observable<any[]>;
   inspectionTypesList$!: Observable<any[]>;
+  inspectionTypesList: any[] = [];  
+
+  
 
   constructor(private service:InspectionApiService) { }
   ngOnInit(): void {
@@ -26,18 +31,56 @@ export class AddEditInspectionComponent implements OnInit {
     this.id = this.inspection.id;
     this.status = this.inspection.status;
     this.comments = this.inspection.comments;
-    this.inspectionTypeId = this.inspection.inspectionTypeId;
+    this.selectedDate = this.inspection.selectedDate;
+    this.amount = this.inspection.amount;
+    this.inspectionName = this.inspection.inspectionName;
+    this.inspectionTypeId =this.inspection.inspectionTypeId;
     this.statusList$ = this.service.getStatusList();
     this.inspectionList$ = this.service.getInspectionList();
     this.inspectionTypesList$ = this.service.getInspectionTypesList();
+    this.inspectionTypesList$.subscribe(types => {
+      console.log(types); 
+      this.inspectionTypesList = types;
+      this.updateTotalAmount();
+    });
+    
 
+  }
+
+
+
+  updateTotalAmount() {
+    console.log('Updating totalAmount:', this.inspectionName);
+  
+    this.inspectionTypesList$.subscribe(types => {
+      console.log('Fetched types:', types);
+      
+      const selectedType = types.find(type => type.inspectionName === this.inspectionName);
+      this.totalAmount = selectedType ? selectedType.totalAmount : 0;
+  
+      console.log('Updated totalAmount:', this.totalAmount);
+    });
+  }
+  
+  
+
+
+  private getTotalAmountByInspectionName(inspectionName: string): number {
+    const selectedType = this.inspectionTypesList.find(type => type.inspectionName === inspectionName);
+
+    return selectedType ? selectedType.totalAmount : 0;
   }
 
   addInspection() {
     var inspection = {
       status:this.status,
       comments:this.comments,
-      inspectionTypeId:this.inspectionTypeId
+      selectedDate:this.selectedDate,
+      amount:this.amount,
+      totalAmount:this.totalAmount,
+      inspectionName:this.inspectionName,
+      inspectionTypeId :this.inspectionTypeId,
+
     }
 
     this.service.addInspection(inspection).subscribe(res => {
@@ -61,13 +104,19 @@ export class AddEditInspectionComponent implements OnInit {
 
   }
 
+  
+
   updateInspection() {
     var inspection = {
       id: this.id,
       status:this.status,
       comments:this.comments,
-      inspectionTypeId:this.inspectionTypeId
-    }
+      inspectionName:this.inspectionName,
+      inspectionTypeId :this.inspectionTypeId,
+      selectedDate:this.selectedDate,
+      amount:this.amount,
+      totalAmount:this.totalAmount,
+       }
     var id:number = this.id;
     this.service.updateInspection(id,inspection).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');

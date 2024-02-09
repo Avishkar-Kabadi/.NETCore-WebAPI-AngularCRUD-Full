@@ -9,8 +9,5 @@ namespace InspectionApiApp
         [StringLength(20)]
         public string StatusOption { get; set; } = string.Empty;
 
-        [StringLength(50)]
-        public string feedback { get; set; } = string.Empty;
-
     }
 }

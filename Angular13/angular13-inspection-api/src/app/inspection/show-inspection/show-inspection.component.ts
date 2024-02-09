@@ -16,6 +16,7 @@ export class ShowInspectionComponent implements OnInit {
 
   // Map to display data associate with foreign keys
   inspectionTypesMap:Map<number, string> = new Map()
+  
 
   constructor(private service:InspectionApiService) { }
 
@@ -62,15 +63,17 @@ export class ShowInspectionComponent implements OnInit {
       id:0,
       status:null,
       comments:null,
-      inspectionTypeId:null
+      inspectionTypeId:null,
+      innspectionName:null,
+      totalAmount:null,
     }
-    this.modalTitle = "Add Inspection";
+    this.modalTitle = "Add Expense";
     this.activateAddEditInspectionComponent = true;
   }
 
   modalEdit(item:any) {
     this.inspection = item;
-    this.modalTitle = "Edit Inspection";
+    this.modalTitle = "Edit Expense";
     this.activateAddEditInspectionComponent = true;
   }
 
@@ -103,6 +106,7 @@ export class ShowInspectionComponent implements OnInit {
     this.inspectiontypes = {
       id:0,
       inspectionName:null,
+      totalAmount:null,
     }
     this.modalTitle = "Add Types";
     this.activateAddEditTypesComponent = true;
@@ -120,7 +124,7 @@ export class ShowInspectionComponent implements OnInit {
   }
   
   delete(item:any) {
-    if(confirm(`Are you sure you want to delete inspection ${item.id}`)) {
+    if(confirm(`Are you sure you want to delete Expense ${item.id}`)) {
       this.service.deleteInspection(item.id).subscribe(res => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
       if(closeModalBtn) {
@@ -143,7 +147,7 @@ export class ShowInspectionComponent implements OnInit {
   
   delete_types(item:any) {
 
-    if(confirm(`Are you sure you want to delete type ${item.inspectionName} and inspection related?`)) { 
+    if(confirm(`Are you sure you want to delete type ${item.inspectionName} and Expense related?`)) { 
 
       this.service.deleteInspectionTypes(item.id).subscribe(res => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');

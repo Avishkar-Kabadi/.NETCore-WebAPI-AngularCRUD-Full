@@ -2,9 +2,6 @@
     <div class="mb-3">
       <label for="statusOption" class="form-label">Status Option</label>
       <input type="text" class="form-control" [(ngModel)]="statusOption" name="statusOption">
-      
-      <label for="feedback" class="form-label">Feedback</label>
-      <textarea type="text" class="form-control" [(ngModel)]="feedback" name="feedback"></textarea>
     </div>
     <button (click)="addStatus()" *ngIf="status.id==0" class="btn btn-primary">
       Add

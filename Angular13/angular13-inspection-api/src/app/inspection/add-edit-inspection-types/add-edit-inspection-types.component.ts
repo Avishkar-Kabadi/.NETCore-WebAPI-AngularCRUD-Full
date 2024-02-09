@@ -13,6 +13,7 @@ export class AddEditInspectionTypesComponent implements OnInit {
   @Input() inspectiontypes:any;
   id: number = 0;
   inspectionName: string = "";
+  totalAmount: Number=0;
 
   constructor(private service:InspectionApiService) { }
 
@@ -20,6 +21,8 @@ export class AddEditInspectionTypesComponent implements OnInit {
     
     this.id = this.inspectiontypes.id;
     this.inspectionName = this.inspectiontypes.inspectionName;
+    this.totalAmount = this.inspectiontypes.totalAmount;
+
 
   }
 
@@ -27,6 +30,9 @@ export class AddEditInspectionTypesComponent implements OnInit {
     
     var inspectiontypes = {
       inspectionName:this.inspectionName,
+      totalAmount:this.totalAmount,
+
+      
     }
 
     this.service.addInspectionTypes(inspectiontypes).subscribe(res => {
@@ -54,6 +60,8 @@ export class AddEditInspectionTypesComponent implements OnInit {
     var inspectiontypes = {
       id: this.id,
       inspectionName:this.inspectionName,
+      totalAmount:this.totalAmount,
+
     }
 
     var id:number = this.id;
