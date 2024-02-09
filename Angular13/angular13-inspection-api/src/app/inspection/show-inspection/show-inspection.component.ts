@@ -5,10 +5,12 @@ import { InspectionApiService } from 'src/app/inspection-api.service';
 interface InspectionItem {
   id: number;
   status: string;
-  amount: number ; // Assuming amount is a number, adjust the type accordingly
+  amount: number ; 
+  pendingAmount: Number;// Assuming amount is a number, adjust the type accordingly
   comments: string;
   userDate: string; // Assuming userDate is a string, adjust the type accordingly
-  inspectionTypeId: number;}
+  inspectionTypeId: number;
+}
 
 @Component({
   selector: 'app-show-inspection',
@@ -21,7 +23,9 @@ export class ShowInspectionComponent implements OnInit {
   inspectionTypesList$!:Observable<any[]>;
   statusList$!: Observable<any[]>;
   inspectionTypesList:any=[];
-  totalExpense: number = 0; // Store the total expense
+  totalExpense: number = 0;
+  totalPendingAmount: number=0;
+  totalPaidAmount:number=0; // Store the total expense
   // Map to display data associate with foreign keys
   inspectionTypesMap:Map<number, string> = new Map()
   
@@ -60,6 +64,11 @@ export class ShowInspectionComponent implements OnInit {
     this.inspectionList$.subscribe(items => {
       this.calculateTotalExpense(items);
     });
+    this.inspectionList$ = this.service.getInspectionList();
+    // Subscribe only once to calculate the initial total expense
+    this.inspectionList$.subscribe(items => {
+      this.calculateTotalPendingAmount(items);
+    });
   }
 
   calculateTotalExpense(items: InspectionItem[] | null): number {
@@ -68,6 +77,15 @@ export class ShowInspectionComponent implements OnInit {
     }
     return 0;
   }
+
+  calculateTotalPendingAmount(items: InspectionItem[] | null): number {
+    if (items) {
+      return items.reduce((total, item) => total + Number(item.pendingAmount || 0), 0);
+    }
+    return 0;
+  }
+
+  
   // Variables (properties)
   modalTitle:string = '';
   activateAddEditInspectionComponent:boolean = false;
@@ -85,6 +103,7 @@ export class ShowInspectionComponent implements OnInit {
       comments:null,
       inspectionTypeId:null,
       totalAmount:null,
+      pendingAmount:null,
     }
     this.modalTitle = "Add Expense";
     this.activateAddEditInspectionComponent = true;

@@ -75,16 +75,23 @@ namespace InspectionApiApp.Controllers
         }
 
         // POST: api/Inspections
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Inspection>> PostInspection(Inspection inspection)
         {
+            var inspectionType = await _context.InspectionTypes.FindAsync(inspection.InspectionTypeId);
+
+            if (inspectionType == null)
+            {
+                return NotFound("Associated InspectionType not found");
+            }
+
+            inspection.PendingAmount = inspectionType.TotalAmount - Convert.ToInt32(inspection.Amount);
+
             _context.Inspections.Add(inspection);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetInspection", new { id = inspection.Id }, inspection);
         }
-
         // DELETE: api/Inspections/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInspection(int id)

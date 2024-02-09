@@ -12,9 +12,9 @@ namespace InspectionApiApp
         [StringLength(200)]
         public string Comments { get; set; } = string.Empty;
 
-        public string Amount { get; set; }
+        public int Amount { get; set; }
 
-
+        public int PendingAmount { get; set; }
 
         public string SelectedDate { get; set; }
 

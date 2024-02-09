@@ -35,7 +35,8 @@
       <td>{{item.comments}}</td>
       <td>{{item.inspectionType.totalAmount}} Rs</td>
       <td>{{item.amount}} Rs</td>
-      <td>{{item.inspectionType.totalAmount- item.amount}} Rs</td>
+      <td>{{item.pendingAmount}} Rs</td>
+      <!-- <td>{{item.inspectionType.totalAmount- item.amount}} Rs</td> -->
       <td>
         <button class="btn btn-outline-primary me-2 mb-1"
         (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -58,16 +59,24 @@
 </table>
 
 
-<table>
+<table class="table table-striped modal-content">
   <tr *ngFor="let item of inspectionList$ | async">
+    <!-- Display data for each item in the list -->
   </tr>
 
   <tr>
-    <td colspan="3"></td>
-    <td><h6>Total Expense :  </h6></td>
+    <td colspan="2"></td>
+    <th><h6>Total Expense :  </h6></th>
     <td><h6>{{ calculateTotalExpense(inspectionList$ | async) }} Rs</h6></td>
+
+    <th><h6>Total Pending Amount :  </h6></th>
+    <td><h6>{{ calculateTotalPendingAmount(inspectionList$ | async) }} Rs</h6></td>
+
     <td colspan="2"></td>
   </tr>
+</table>
+
+
 
 <div class="alert alert-success" role="alert" id="add-success-alert">
   Successfully added!
