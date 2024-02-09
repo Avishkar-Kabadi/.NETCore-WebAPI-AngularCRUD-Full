@@ -14,6 +14,8 @@ namespace InspectionApiApp
 
         public string Amount { get; set; }
 
+
+
         public string SelectedDate { get; set; }
 
         public int InspectionTypeId { get; set; }

@@ -23,10 +23,7 @@
       <label for="amount" class="form-label"> Paid Amount</label>
       <input type="text" class="form-control" [(ngModel)]="amount" name="amount">
     </div>
-    <!-- <div class="mb-3">
-      <label for="totalAmount" class="form-label">Total Amount To Pay</label>
-      <input type="text" class="form-control" [(ngModel)]="totalAmount" name="totalAmount" [disabled]="inspection.id != 0">
-    </div> -->
+    
     
    
     <div class="mb-3">
@@ -40,3 +37,21 @@
       Update
     </button>
   </form>
+
+  <table class="table m-2" >
+    <tr>
+      <th>Total Amount</th>
+    <br/>
+    <th></th>
+      <th>Pending Amount</th>
+     
+    </tr>
+    <tr>
+      <td>100000</td>
+      <td></td>
+      <br>
+      <td>2000</td>
+      <br/>
+     
+    </tr>
+  </table>

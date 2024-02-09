@@ -15,6 +15,7 @@ export class AddEditInspectionComponent implements OnInit {
   comments: string = "";
   inspectionName: string="";
   inspectionTypeId!:Number;
+  pending_amount!:Number;
   amount:Number=0;
   totalAmount:Number=0;
   selectedDate: Date = new Date;
@@ -22,6 +23,8 @@ export class AddEditInspectionComponent implements OnInit {
   statusList$!: Observable<any[]>;
   inspectionTypesList$!: Observable<any[]>;
   inspectionTypesList: any[] = [];  
+  
+
 
   
 
@@ -33,6 +36,7 @@ export class AddEditInspectionComponent implements OnInit {
     this.comments = this.inspection.comments;
     this.selectedDate = this.inspection.selectedDate;
     this.amount = this.inspection.amount;
+    this.pending_amount=this.pending_amount;
     this.inspectionName = this.inspection.inspectionName;
     this.inspectionTypeId =this.inspection.inspectionTypeId;
     this.statusList$ = this.service.getStatusList();
@@ -43,6 +47,8 @@ export class AddEditInspectionComponent implements OnInit {
       this.inspectionTypesList = types;
       this.updateTotalAmount();
     });
+
+    
     
 
   }
@@ -80,6 +86,7 @@ export class AddEditInspectionComponent implements OnInit {
       totalAmount:this.totalAmount,
       inspectionName:this.inspectionName,
       inspectionTypeId :this.inspectionTypeId,
+      pending_amount:this.pending_amount,
 
     }
 
@@ -116,6 +123,8 @@ export class AddEditInspectionComponent implements OnInit {
       selectedDate:this.selectedDate,
       amount:this.amount,
       totalAmount:this.totalAmount,
+      pending_amount:this.pending_amount,
+
        }
     var id:number = this.id;
     this.service.updateInspection(id,inspection).subscribe(res => {

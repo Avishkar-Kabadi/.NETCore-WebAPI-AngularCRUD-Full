@@ -2,6 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InspectionApiService } from 'src/app/inspection-api.service';
 
+interface InspectionItem {
+  id: number;
+  status: string;
+  amount: number ; // Assuming amount is a number, adjust the type accordingly
+  comments: string;
+  userDate: string; // Assuming userDate is a string, adjust the type accordingly
+  inspectionTypeId: number;}
+
 @Component({
   selector: 'app-show-inspection',
   templateUrl: './show-inspection.component.html',
@@ -13,7 +21,7 @@ export class ShowInspectionComponent implements OnInit {
   inspectionTypesList$!:Observable<any[]>;
   statusList$!: Observable<any[]>;
   inspectionTypesList:any=[];
-
+  totalExpense: number = 0; // Store the total expense
   // Map to display data associate with foreign keys
   inspectionTypesMap:Map<number, string> = new Map()
   
@@ -46,8 +54,20 @@ export class ShowInspectionComponent implements OnInit {
     if(showdeleteError) {
       showdeleteError.style.display = "none";
     }
+
+    this.inspectionList$ = this.service.getInspectionList();
+    // Subscribe only once to calculate the initial total expense
+    this.inspectionList$.subscribe(items => {
+      this.calculateTotalExpense(items);
+    });
   }
 
+  calculateTotalExpense(items: InspectionItem[] | null): number {
+    if (items) {
+      return items.reduce((total, item) => total + Number(item.amount || 0), 0);
+    }
+    return 0;
+  }
   // Variables (properties)
   modalTitle:string = '';
   activateAddEditInspectionComponent:boolean = false;
@@ -64,7 +84,6 @@ export class ShowInspectionComponent implements OnInit {
       status:null,
       comments:null,
       inspectionTypeId:null,
-      innspectionName:null,
       totalAmount:null,
     }
     this.modalTitle = "Add Expense";
